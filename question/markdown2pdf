@@ -1,0 +1,44 @@
+#!/bin/bash
+
+MARKDOWN=`markdown --version`
+WKHTMLTOPDF=`wkhtmltopdf --version`
+if [ -z "$MARKDOWN" ] || [ -z "$WKHTMLTOPDF" ]; then
+    echo "please install markdown first or wkhtmltopdf"
+    echo "apt-get install markdown"
+    echo "apt-get install wkhtmltopdf"
+fi
+
+SRC=$1
+BASE_SRC=`basename $SRC`
+TYPE=`echo $BASE_SRC | sed 's/.*\.//g'`
+MDTYPE="md"
+
+echo "START converting $SRC to pdf"
+
+if [ "$TYPE" == "$MDTYPE" ]; then
+    echo
+else
+    echo
+    echo "input file type only .md is valid"
+    echo "please re-check you input file"
+    echo
+fi
+
+if [ "$SRC" = "$BASE_SRC" ]; then
+    DIR=`pwd`
+    FULLPATH=$DIR/$SRC
+    echo "at current directory"
+else
+    DIR=`dirname $SRC`
+    FULLPATH=$SRC
+    echo "at directory: $CUR"
+fi
+
+pushd $DIR > /dev/null
+HTML_NAME=`echo $BASE_SRC | sed 's/\.md/\.html/g'`
+PDF_NAME=`echo $BASE_SRC | sed 's/\.md/\.pdf/g'`
+echo $HTML_NAME
+markdown $FULLPATH > $HTML_NAME
+wkhtmltopdf $HTML_NAME $PDF_NAME
+rm -rf $HTML_NAME
+popd > /dev/null 
