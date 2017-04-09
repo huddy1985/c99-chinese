@@ -11,4 +11,4 @@ default: $(PDFFILES)
 	$(MD2PDF) $<
 
 clean:
-	rm -rf `ls *.pdf | egrep -v c99.pdf`
+	rm -rf `ls *.pdf | egrep -v '(c99.pdf|c89中文版.pdf)'`
