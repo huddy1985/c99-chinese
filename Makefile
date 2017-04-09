@@ -2,7 +2,7 @@
 
 MDFILES = $(wildcard *.md)
 PDFFILES = $(patsubst %.md,%.pdf, $(MDFILES))
-MD2PDF = markdown2pdf
+MD2PDF = ./markdown2pdf
 
 default: $(PDFFILES)
 	echo $(PDFFILES)
